@@ -2,7 +2,7 @@
 This small software, written in Python, allows you to generate custom files that create different color and wood types varients for display entities in Minecraft Java.
 
 ## Who is this for and what's the purpose?
-If you create display entity models and want your model to be available in either all 16 Minecraft colors or all 10 wood varients, you can use this program to auto generate these files. Python is required to be installed in order to run the program.
+If you create display entity models and want your model to be available in either all 16 Minecraft colors or all 10 wood varients, you can use this program to auto generate these files.
 
 ## Tutorial
 Looking for the documentation? Click [here](https://github.com/corv1njano/Display-Entities-Scripts/blob/main/docs/help.md) and learn how to use the program.
