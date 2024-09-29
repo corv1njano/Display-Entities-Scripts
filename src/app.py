@@ -1,27 +1,39 @@
 import tkinter as tk
-from tkinter import ttk, Toplevel, Label, Button, PhotoImage
+from tkinter import ttk, Toplevel, Label, filedialog
 import webbrowser
 import os
 
 def open_github():
     webbrowser.open("https://github.com/corv1njano/Display-Entities-Scripts")
-
 def open_patreon():
     webbrowser.open("https://www.patreon.com/corv1njano/membership")
 
+def save_directory(*args):
+    currentDir = os.getcwd()
+    dir = filedialog.askdirectory(title="Select a Folder for your .mcfunction-Files...",
+                                  initialdir=currentDir)
+    if dir:
+        clicked6.set(dir)
+
 def generate_files():
-    selectedMode = clicked1.get()
-    command = entry0.get()
-    blockTarget = clicked2.get()
-    blockReplacement = clicked3.get()
-    filename = entry4.get()
-    replaceValue = clicked5.get()
+    selectedMode =      clicked1.get()
+    command =           entry0.get()
+    blockTarget =       clicked2.get()
+    blockReplacement =  clicked3.get()
+    filename =          entry4.get()
+    replaceValue =      clicked5.get()
+    saveLocation =      clicked6.get()
+    loc =               os.path.dirname(os.path.abspath(__file__))
     if selectedMode == "Change Color":
         colors = ["white","yellow","orange","red","pink","magenta","purple","blue","cyan","light_blue","lime","green","brown","gray","light_gray","black"]
         for color in colors:
             outputText = command.replace(f"{replaceValue}_{blockTarget}", f"{color}_{blockReplacement}")
-            with open(f"{color}_{filename}.mcfunction", "w") as file:
-                file.write(outputText)
+            if saveLocation == "Same as .exe-File":
+                with open(f"{loc}/{color}_{filename}.mcfunction", "w") as file:
+                    file.write(outputText)
+            else:
+                with open(f"{saveLocation}/{color}_{filename}.mcfunction", "w") as file:
+                    file.write(outputText)
         open_dialog("16 Files have been placed in the current Directory.")
     elif selectedMode == "Change Wood":
         woodtypes = ["oak","birch","spruce","dark_oak","jungle","acacia","mangrove","cherry","warped","crimson"]
@@ -36,8 +48,12 @@ def generate_files():
                     outputText = command.replace(f"{replaceValue}_wood", f"{wood}_hyphae").replace(f"{replaceValue}_log", f"{wood}_stem").replace(f"{replaceValue}_planks",f"{wood}_planks")
                 else:
                     outputText = command.replace(replaceValue, wood)
-            with open(f"{wood}_{filename}.mcfunction", "w") as file:
-                file.write(outputText)
+            if saveLocation == "Same as .exe-File":
+                with open(f"{loc}/{wood}_{filename}.mcfunction", "w") as file:
+                    file.write(outputText)
+            else:
+                with open(f"{saveLocation}/{wood}_{filename}.mcfunction", "w") as file:
+                    file.write(outputText)
         open_dialog("10 Files have been placed in the current Directory.")
 
 root = tk.Tk()
@@ -60,7 +76,7 @@ style.configure('TButton',
 
 def open_dialog(msg):
     dialog = Toplevel(root)
-    dialog.geometry("450x75")
+    dialog.geometry("500x100")
     dialog.title("Files created!")
     dialog.resizable(False, False)
     dialog.config(bg='#101010')
@@ -71,7 +87,7 @@ def open_dialog(msg):
     icon = tk.PhotoImage(file=icon_path)
     dialog.iconphoto(False, icon)
     center_window(dialog, offset=100)
-    Label(dialog, text=f"{msg}\n\nThis Window will close in 5 Seconds...", bg="#101010", fg='#D6D6D6', font=("Verdana", 12)).pack(padx=6, pady=6)
+    Label(dialog, text=f"{msg}\n\nThis Window will close in 5 Seconds...", bg="#101010", fg='#D6D6D6', font=("Verdana", 11)).place(relx=0.5, rely=0.5, anchor='center')
     dialog.focus_set()
     dialog.after(5000, dialog.destroy)
 
@@ -81,6 +97,7 @@ root.resizable(False, False)
 root.config(bg='#101010')
 border = tk.Frame(root, bg='#101010')
 border.pack(fill=tk.BOTH, expand=True)
+center_window(root, offset=100)
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 icon_file = 'icon.png'
@@ -90,7 +107,7 @@ root.iconphoto(False, icon)
 
 border.grid_columnconfigure(0, weight=1)
 border.grid_columnconfigure(1, minsize=180)
-for i in range(8):
+for i in range(9):
     border.grid_rowconfigure(i, weight=1)
 
 button0 = ttk.Button(border, text="Open Help/Tutorial", command=open_github, style='TButton')
@@ -158,11 +175,17 @@ label4.grid(row=6, column=0, sticky="e")
 entry4 = ttk.Entry(border, style='TEntry')
 entry4.grid(row=6, column=1, sticky="ew", padx=(0, 6))
 
-versionLabel = tk.Label(border, text="Version 1.1 by corv1njano", bg="#101010", fg='#666666', font=("Verdana", 9))
-versionLabel.grid(row=7, column=0, sticky="w", padx=(6, 0))
-button2 = ttk.Button(border, text="Generate Files...", command=generate_files, style='TButton')
-button2.grid(row=7, column=1, sticky="e", padx=(0, 6))
+label6 = tk.Label(border, text="Save Location:", bg="#101010", fg='#D6D6D6', font=("Verdana", 12))
+label6.grid(row=7, column=0, sticky="e")
+clicked6 = tk.StringVar()
+entry6 = ttk.Entry(border, style='TEntry', textvariable=clicked6)
+clicked6.set("Same as .exe-File")
+entry6.grid(row=7, column=1, sticky="ew", padx=(0, 6))
+entry6.bind("<Button-1>", save_directory)
 
-center_window(root, offset=100)
+versionLabel = tk.Label(border, text="Version 1.2 by corv1njano", bg="#101010", fg='#666666', font=("Verdana", 9))
+versionLabel.grid(row=8, column=0, sticky="w", padx=(6, 0))
+button2 = ttk.Button(border, text="Generate Files...", command=generate_files, style='TButton')
+button2.grid(row=8, column=1, sticky="e", padx=(0, 6))
 
 root.mainloop()
