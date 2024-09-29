@@ -8,4 +8,4 @@ If you create display entity models and want your model to be available in eithe
 Looking for the documentation? Click [here](https://github.com/corv1njano/Display-Entities-Scripts/blob/main/docs/help.md) and learn how to use the program.
 
 ## Disclaimer
-This is my first ever Python software. I only used to quickly generate an application without much effort. This source code can be found [here](https://github.com/corv1njano/Display-Entities-Scripts/tree/main/src).
+The is my first ever Python software. I only used to quickly generate an application without much effort. This source code can be found [here](https://github.com/corv1njano/Display-Entities-Scripts/tree/main/src). As of release 1.2 the software is completly finished and there are no more plans for additional features.
