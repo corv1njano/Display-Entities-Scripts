@@ -1,5 +1,5 @@
 # Help / Tutorial
-Documentation on how to use to program. Download the latest version of 1.2 from the releases tab.
+Documentation on how to use to program. Download the latest version of 1.2 from the [releases](https://github.com/corv1njano/Display-Entities-Scripts/releases) tab.
 
 # Interface
 When you run the executable file, the program will start and appear like this:
