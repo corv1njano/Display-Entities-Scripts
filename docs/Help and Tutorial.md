@@ -8,7 +8,7 @@ When you run the executable file, the program will start and appear like this:
 
 Features:
 - **Command**: Paste the entity display command here, but remove the slash at the beginning. The output will be a .mcfunction file, and commands within this file should not have a slash at the start.
-- **Block Type**: Choose "Change Color" if you want to create different color varients for your model. Choose "Chnge Wood" to create different wood varients. The default value to be replace is color "white" and wood "oak".
+- **Block Type**: Choose "Change Color" if you want to create different color varients for your model. Choose "Change Wood" to create different wood varients.
 - **Value Replacement**: Choose the value you want to replace. For example, if your command was created for a white color style, select "white" here to replace it with the other colors. 
 - **Target**: If color mode is chosen, select the target block variant to replace.
 - **Replacement**: If color mode is chosen, select the block that replaces the target. If the target should not be replaced, select the replacement block type to be the same as the target block.
