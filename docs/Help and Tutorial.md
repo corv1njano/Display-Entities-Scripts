@@ -4,7 +4,7 @@ Documentation on how to use to program.
 # Interface
 When you run the executable file, the program will start and appear like this:
 
-![Image could not be loaded!](https://raw.githubusercontent.com/corv1njano/Display-Entities-Scripts/refs/heads/main/docs/img/app.PNG "Title")
+![Image could not be loaded!](https://raw.githubusercontent.com/corv1njano/Display-Entities-Scripts/refs/heads/main/docs/img/ui-1-2.PNG "Title")
 
 Features:
 - **Command**: Paste the entity display command here, but remove the slash at the beginning. The output will be a .mcfunction file, and commands within this file should not have a slash at the start.
