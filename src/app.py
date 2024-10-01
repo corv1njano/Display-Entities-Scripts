@@ -17,7 +17,7 @@ def save_directory(*args):
 
 def generate_files():
     selectedMode =      clicked1.get()
-    command =           entry0.get()
+    command =           entry0.get().replace("/summon","summon")
     blockTarget =       clicked2.get()
     blockReplacement =  clicked3.get()
     filename =          entry4.get()
@@ -34,7 +34,7 @@ def generate_files():
             else:
                 with open(f"{saveLocation}/{color}_{filename}.mcfunction", "w") as file:
                     file.write(outputText)
-        open_dialog("16 Files have been placed in the current Directory.")
+        open_dialog("16")
     elif selectedMode == "Change Wood":
         woodtypes = ["oak","birch","spruce","dark_oak","jungle","acacia","mangrove","cherry","warped","crimson"]
         for wood in woodtypes:
@@ -54,7 +54,7 @@ def generate_files():
             else:
                 with open(f"{saveLocation}/{wood}_{filename}.mcfunction", "w") as file:
                     file.write(outputText)
-        open_dialog("10 Files have been placed in the current Directory.")
+        open_dialog("10")
 
 root = tk.Tk()
 
@@ -72,7 +72,8 @@ style = ttk.Style()
 style.configure('TButton', 
                 font=('Verdana', 10), 
                 foreground='#101010', 
-                background='#101010')
+                background='#101010',
+                padding=(15, 0))
 
 def open_dialog(msg):
     dialog = Toplevel(root)
@@ -87,7 +88,7 @@ def open_dialog(msg):
     icon = tk.PhotoImage(file=icon_path)
     dialog.iconphoto(False, icon)
     center_window(dialog, offset=100)
-    Label(dialog, text=f"{msg}\n\nThis Window will close in 5 Seconds...", bg="#101010", fg='#D6D6D6', font=("Verdana", 11)).place(relx=0.5, rely=0.5, anchor='center')
+    Label(dialog, text=f"{msg} Files have been placed in the selected Directory.\n\nThis Window will close in 5 Seconds...", bg="#101010", fg='#D6D6D6', font=("Verdana", 11)).place(relx=0.5, rely=0.5, anchor='center')
     dialog.focus_set()
     dialog.after(5000, dialog.destroy)
 
@@ -117,7 +118,7 @@ button1.grid(row=0, column=1, sticky="e", padx=(0, 6))
 
 style.configure('TEntry', foreground='#101010', background='#101010', padding=6)
 
-label0 = tk.Label(border, text="Command (without \"/\" at Beginning):", bg="#101010", fg='#D6D6D6', font=("Verdana", 12))
+label0 = tk.Label(border, text="Command (only one per Run):", bg="#101010", fg='#D6D6D6', font=("Verdana", 12))
 label0.grid(row=1, column=0, sticky="e")
 entry0 = ttk.Entry(border, style='TEntry')
 entry0.grid(row=1, column=1, sticky="ew", padx=(0, 6))
@@ -157,7 +158,7 @@ entry1.grid(row=2, column=1, sticky="ew", padx=(0, 6))
 
 label2 = tk.Label(border, text="Block Varient to Target:", bg="#101010", fg='#D6D6D6', font=("Verdana", 12))
 label2.grid(row=4, column=0, sticky="e")
-options2 = ["wool", "terracotta", "glazed_terracotta", "concrete", "concrete_powder", "stained_glass"]
+options2 = ["terracotta", "glazed_terracotta", "concrete", "concrete_powder", "stained_glass", "stained_glass_pane", "banner", "wall_banner", "candle", "candle_cake", "bed", "shulker_box", "wool", "carpet"]
 clicked2 = tk.StringVar()
 clicked2.set(options2[0])
 entry2 = tk.OptionMenu(border, clicked2, *options2)
@@ -183,7 +184,7 @@ clicked6.set("Same as .exe-File")
 entry6.grid(row=7, column=1, sticky="ew", padx=(0, 6))
 entry6.bind("<Button-1>", save_directory)
 
-versionLabel = tk.Label(border, text="Version 1.2 by corv1njano", bg="#101010", fg='#666666', font=("Verdana", 9))
+versionLabel = tk.Label(border, text="Version 1.3 by corv1njano", bg="#101010", fg='#666666', font=("Verdana", 9))
 versionLabel.grid(row=8, column=0, sticky="w", padx=(6, 0))
 button2 = ttk.Button(border, text="Generate Files...", command=generate_files, style='TButton')
 button2.grid(row=8, column=1, sticky="e", padx=(0, 6))
