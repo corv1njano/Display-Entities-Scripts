@@ -4,10 +4,10 @@ Documentation on how to use to program. Download the latest version of 1.2 from 
 # Interface
 When you run the executable file, the program will start and appear like this:
 
-![Image could not be loaded!](https://raw.githubusercontent.com/corv1njano/Display-Entities-Scripts/refs/heads/main/docs/img/ui-1-2.PNG "Title")
+![Image could not be loaded!](https://raw.githubusercontent.com/corv1njano/Display-Entities-Scripts/refs/heads/main/docs/img/ui-1-3.PNG "Title")
 
 Features:
-- **Command**: Paste the entity display command here, but remove the slash at the beginning. The output will be a .mcfunction file, and commands within this file should not have a slash at the start.
+- **Command**: Paste the entity display command here.
 - **Block Type**: Choose "Change Color" if you want to create different color varients for your model. Choose "Change Wood" to create different wood varients.
 - **Value Replacement**: Choose the value you want to replace. For example, if your command was created for a white color style, select "white" here to replace it with the other colors. 
 - **Target**: If color mode is chosen, select the target block variant to replace.
