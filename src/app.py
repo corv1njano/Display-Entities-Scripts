@@ -2,16 +2,59 @@ import tkinter as tk
 from tkinter import ttk, Toplevel, Label, filedialog
 import webbrowser
 import os
+import requests
 
 def open_github():
     webbrowser.open("https://github.com/corv1njano/Display-Entities-Scripts")
 def open_patreon():
     webbrowser.open("https://www.patreon.com/corv1njano/membership")
+def update_checker(msg, type):
+    dialogUpdate = Toplevel(root)
+    dialogUpdate.title("Check for Updates...")
+    dialogUpdate.resizable(False, False)
+    dialogUpdate.config(bg='#101010')
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    icon_file = 'icon.png'
+    icon_path = os.path.join(script_dir, icon_file)
+    icon = tk.PhotoImage(file=icon_path)
+    dialogUpdate.iconphoto(False, icon)
+    center_window(dialogUpdate, offset=100)
+    if type == 0 or type == 1:
+        dialogUpdate.geometry("400x100")
+        Label(dialogUpdate, text=f"{msg}", bg="#101010", fg='#D6D6D6', font=("Verdana", 11)).place(relx=0.5, rely=0.5, anchor='center')
+    elif type == 2:
+        dialogUpdate.geometry("400x120")
+        label = tk.Label(dialogUpdate, text=f"{msg}", anchor="n", bg="#101010", fg='#D6D6D6', font=("Verdana", 11), padx=0, pady=15)
+        label.pack(fill="x")
+        gridDialog = tk.Frame(dialogUpdate, bg="#101010")
+        gridDialog.pack(fill="both", expand=True)
+        button_yes = ttk.Button(gridDialog, text="Yes", command=download_update, style='TButton')
+        button_no = ttk.Button(gridDialog, text="No", command=dialogUpdate.destroy, style='TButton')
+        button_yes.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        button_no.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        gridDialog.grid_columnconfigure(0, weight=1)
+        gridDialog.grid_columnconfigure(1, weight=1)
+    dialogUpdate.focus_set()
+
+def download_update():
+    webbrowser.open("https://github.com/corv1njano/Display-Entities-Scripts/releases")
+
+def update_request():
+    CURRENTVER = 140
+    updateUrl = "https://raw.githubusercontent.com/corv1njano/Display-Entities-Scripts/refs/heads/main/.appversion"
+    res = requests.get(updateUrl)
+    if res.status_code == 200:
+        ver = int(res.text.strip())
+        if ver > CURRENTVER:
+            update_checker("There is a new update available!\nDownload now?", 2)
+        elif ver == CURRENTVER:
+            update_checker("You are up to date!", 0)
+    elif res.status_code != 200:
+        update_checker("Could not connect to server.\nPlease try again.", 1)
 
 def save_directory(*args):
     currentDir = os.getcwd()
-    dir = filedialog.askdirectory(title="Select a Folder for your .mcfunction-Files...",
-                                  initialdir=currentDir)
+    dir = filedialog.askdirectory(title="Select a Folder for your .mcfunction-Files...", initialdir=currentDir)
     if dir:
         clicked6.set(dir)
 
@@ -23,13 +66,12 @@ def generate_files():
     filename =          entry4.get()
     replaceValue =      clicked5.get()
     saveLocation =      clicked6.get()
-    loc =               os.path.dirname(os.path.abspath(__file__))
     if selectedMode == "Change Color":
         colors = ["white","yellow","orange","red","pink","magenta","purple","blue","cyan","light_blue","lime","green","brown","gray","light_gray","black"]
         for color in colors:
             outputText = command.replace(f"{replaceValue}_{blockTarget}", f"{color}_{blockReplacement}")
             if saveLocation == "Same as .exe-File":
-                with open(f"{loc}/{color}_{filename}.mcfunction", "w") as file:
+                with open(f"{color}_{filename}.mcfunction", "w") as file:
                     file.write(outputText)
             else:
                 with open(f"{saveLocation}/{color}_{filename}.mcfunction", "w") as file:
@@ -49,7 +91,7 @@ def generate_files():
                 else:
                     outputText = command.replace(replaceValue, wood)
             if saveLocation == "Same as .exe-File":
-                with open(f"{loc}/{wood}_{filename}.mcfunction", "w") as file:
+                with open(f"{wood}_{filename}.mcfunction", "w") as file:
                     file.write(outputText)
             else:
                 with open(f"{saveLocation}/{wood}_{filename}.mcfunction", "w") as file:
@@ -81,7 +123,6 @@ def open_dialog(msg):
     dialog.title("Files created!")
     dialog.resizable(False, False)
     dialog.config(bg='#101010')
-    dialog.focus_set()
     script_dir = os.path.dirname(os.path.abspath(__file__))
     icon_file = 'icon.png'
     icon_path = os.path.join(script_dir, icon_file)
@@ -93,7 +134,7 @@ def open_dialog(msg):
     dialog.after(5000, dialog.destroy)
 
 root.title("Display Entities Varient Editor")
-root.geometry("520x350")
+root.geometry("520x320") # prev 520x350
 root.resizable(False, False)
 root.config(bg='#101010')
 border = tk.Frame(root, bg='#101010')
@@ -110,11 +151,6 @@ border.grid_columnconfigure(0, weight=1)
 border.grid_columnconfigure(1, minsize=180)
 for i in range(9):
     border.grid_rowconfigure(i, weight=1)
-
-button0 = ttk.Button(border, text="Open Help/Tutorial", command=open_github, style='TButton')
-button0.grid(row=0, column=0, sticky="w", padx=(6, 0))
-button1 = ttk.Button(border, text="Donate!", command=open_patreon, style='TButton')
-button1.grid(row=0, column=1, sticky="e", padx=(0, 6))
 
 style.configure('TEntry', foreground='#101010', background='#101010', padding=6)
 
@@ -184,9 +220,15 @@ clicked6.set("Same as .exe-File")
 entry6.grid(row=7, column=1, sticky="ew", padx=(0, 6))
 entry6.bind("<Button-1>", save_directory)
 
-versionLabel = tk.Label(border, text="Version 1.3 by corv1njano", bg="#101010", fg='#666666', font=("Verdana", 9))
+versionLabel = tk.Label(border, text="Version 1.4.0 by corv1njano", bg="#101010", fg='#666666', font=("Verdana", 9))
 versionLabel.grid(row=8, column=0, sticky="w", padx=(6, 0))
 button2 = ttk.Button(border, text="Generate Files...", command=generate_files, style='TButton')
 button2.grid(row=8, column=1, sticky="e", padx=(0, 6))
+
+menu_bar = tk.Menu(root, bg='#202020', fg='#d6d6d6', activebackground='blue', activeforeground='white')
+menu_bar.add_command(label="GitHub", command=open_github)
+menu_bar.add_command(label="Update", command=update_request)
+menu_bar.add_command(label="Donate", command=open_patreon)
+root.config(menu=menu_bar)
 
 root.mainloop()
